@@ -35,12 +35,12 @@ colorscheme solarized
 " Set airline powerline fonts and theme
 let g:airline_powerline_fonts = 1
 let g:airline_theme='solarized'
-
+set laststatus=2
 "------------------------------
 " THis is for my own good
 "------------------------------
 " No arrow keys allowed
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
+map <Up> <NOP>
+map <Down> <NOP>
+map <Left> <NOP>
+map <Right> <NOP>
