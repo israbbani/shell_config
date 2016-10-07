@@ -2,6 +2,7 @@
 " Description: My VIM configuration for web development
 " Url: https://github.com/israbbani/shell_config
 
+" Turn of compatibility with Vi just in case
 set nocompatible
 
 " Add line numbers
@@ -9,14 +10,11 @@ set number
 
 " Plug manages packages for VIM see: https://github.com/junegunn/vim-plug
 call plug#begin()
-	" Nerdtree creates a sidebar for VIM that lets you view the files in
-	" yor current project.
-	Plug 'https://github.com/scrooloose/nerdtree'
-	" Nerdtree tabs allows you to have multiple tabs open in your one vim
-	" window giving it the feel of an IDE
-	Plug 'https://github.com/jistr/vim-nerdtree-tabs.git'
-	" Solarized Theme for VIM
+	Plug 'scrooloose/nerdtree'
+	Plug 'jistr/vim-nerdtree-tabs'
 	Plug 'altercation/vim-colors-solarized'
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
 " End Plug Block
 call plug#end()
 
@@ -33,6 +31,10 @@ nmap <C-m> :NERDTreeTabsFind<CR>
 syntax enable
 set background=dark
 colorscheme solarized
+
+" Set airline powerline fonts and theme
+let g:airline_powerline_fonts = 1
+let g:airline_theme='solarized'
 
 "------------------------------
 " THis is for my own good
