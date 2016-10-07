@@ -1,9 +1,11 @@
 " Author: Ibrahim Rabbani
 " Description: My VIM configuration for web development
 " Features: Workspace Viewer, Tabs and Syntax Highlighting
-set t_Co=256
-syntax enable
-colorscheme vividchalk
+
+set nocompatible
+
+" Add line numbers
+set number
 
 " Plug manages packages for VIM see: https://github.com/junegunn/vim-plug
 call plug#begin()
@@ -13,20 +15,30 @@ call plug#begin()
 	" Nerdtree tabs allows you to have multiple tabs open in your one vim
 	" window giving it the feel of an IDE
 	Plug 'https://github.com/jistr/vim-nerdtree-tabs.git'
+	" Solarized Theme for VIM
+	Plug 'altercation/vim-colors-solarized'
 " End Plug Block
 call plug#end()
 
 " ------------------------------ 
 " NERDTree configuration for VIM
 " ------------------------------
-" Start NERDTree automatically when VIM starts up
-autocmd vimenter * NERDTree
-" Start NERDTree automatically when no files are specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Map NERDTree toggle onto a keyboard shortcut
 nmap <C-n> :NERDTreeToggle<CR>
 nmap <C-m> :NERDTreeTabsFind<CR>
 " ------------------------------ 
 " End NERDTree configuration
 " ------------------------------
+
+syntax enable
+set background=dark
+colorscheme solarized
+
+"------------------------------
+" THis is for my own good
+"------------------------------
+" No arrow keys allowed
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
