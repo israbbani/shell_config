@@ -1,6 +1,6 @@
 " Author: Ibrahim Rabbani
 " Description: My VIM configuration for web development
-" Features: Workspace Viewer, Tabs and Syntax Highlighting
+" Url: https://github.com/israbbani/shell_config
 
 set nocompatible
 
