@@ -1,9 +1,10 @@
 " Author: Ibrahim Rabbani
-" Description: My VIM configuration for web development
+" Description: My VIM configuration python development
 " Url: https://github.com/israbbani/shell_config
 "
 " Turn of compatibility with Vi just in case
 set nocompatible
+filetype off
 
 " Add line numbers
 set number
@@ -11,34 +12,53 @@ set number
 " Fix Backspace
 set backspace=indent,eol,start
 
-" Plug manages packages for VIM see: https://github.com/junegunn/vim-plug
-call plug#begin()
-	Plug 'scrooloose/nerdtree'
-	Plug 'jistr/vim-nerdtree-tabs'
-	Plug 'altercation/vim-colors-solarized'
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
-	Plug 'junegunn/fzf'
-	Plug 'junegunn/fzf.vim'
-	Plug 'SirVer/ultisnips'
-	Plug 'Valloric/YouCompleteMe'
-	Plug 'pangloss/vim-javascript' 
-	Plug 'mxw/vim-jsx'
-	Plug 'leshill/vim-json'
-        Plug 'epilande/vim-es2015-snippets'
-        Plug 'epilande/vim-react-snippets'
-" End Plug Block
-call plug#end()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Bundle 'Valloric/YouCompleteMe'
+call vundle#end()
+filetype plugin indent on
 
-" ------------------------------ 
-" Indentation Config 
-" ------------------------------
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-" ------------------------------ 
-"  End Indentation Config
-" ------------------------------
+" Splits to the bottom and right by default
+set splitbelow
+set splitright
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+
+" Python Indentation
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix |
+
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+set encoding=utf-8
+
+" YCM 
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+let python_highlight_all=1
 
 " ------------------------------ 
 " FZF (Fuzzy Search) Config
@@ -49,36 +69,17 @@ nmap <C-p> :Files<CR>
 " ------------------------------
 
 " ------------------------------ 
-" UltiSnips Config
-" ------------------------------
-let g:UltiSnipsExpandTrigger="<c-a>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
-" ------------------------------ 
-"  End UltiSnips Config
-" ------------------------------
-
-" ------------------------------ 
-" JS configuration for VIM
-" ------------------------------
-let g:javascript_plugin_flow = 1
-let g:jsx_ext_required = 0
-" ------------------------------ 
-" End JS configuration
-" ------------------------------
-
-" ------------------------------ 
 " NERDTree configuration for VIM
 " ------------------------------
 " Map NERDTree toggle onto a keyboard shortcut
 nmap <C-n> :NERDTreeToggle<CR>
 nmap <C-m> :NERDTreeTabsFind<CR>
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 " ------------------------------ 
 " End NERDTree configuration
 " ------------------------------
 
-syntax enable
+syntax on
 set background=dark
 " colorscheme solarized
 
@@ -97,3 +98,13 @@ map <Left> <NOP>
 map <Right> <NOP>
 " Mapping CTRL M N to move everything at the cursor to a new line 
 map <C-\> i<CR>
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
